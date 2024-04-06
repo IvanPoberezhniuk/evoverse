@@ -45,15 +45,16 @@ export default function Login() {
     onSubmit: (values) => {
       alert(JSON.stringify({ isValid, ...values }, null, 2));
     },
-    validateOnChange: true,
     validationSchema: loginSchema,
   });
 
   return (
     <Box sx={styles.container}>
       <Stack>
-        <Typography variant="h4">WELCOME BACK</Typography>
-        <Typography variant="body2">
+        <Typography variant="h3" textAlign="center">
+          WELCOME BACK
+        </Typography>
+        <Typography variant="body2" textAlign="center">
           We've saved your seat at the winning table.
         </Typography>
         <TextField

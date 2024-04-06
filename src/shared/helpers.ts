@@ -1,8 +1,8 @@
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
 Yup.setLocale({
   mixed: {
-    required: " ",
+    required: "This field is required.",
   },
   string: {
     min: "Minimun ${min} characters.",

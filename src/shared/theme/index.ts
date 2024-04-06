@@ -29,11 +29,7 @@ theme = createTheme(theme, {
       fontSize: "18px",
     },
     body2: {
-      fontSize: { xs: "18px", md: "26px" },
-    },
-    body3: {
-      fontSize: "16px",
-      fontWeight: 600,
+      fontSize: "14px",
     },
   },
 });
