@@ -19,7 +19,6 @@ export function makeServer({ environment = "test" } = {}) {
       this.namespace = "auth";
       this.get("/nonce/:walletAddress", (schema, request) => {
         let { walletAddress } = request.params;
-        console.log(request.params);
         const string = generateRandomString(20);
         return { string, walletAddress };
       });
