@@ -68,7 +68,7 @@ export default function Signin() {
   });
 
   const [metamaskSignUp, setmetamaskSignUp] = useState(false);
-  const { accounts, handleSignUp } = useMetaMask();
+  const { handleSignUp } = useMetaMask();
 
   const signUp = (): void => {
     if (metamaskSignUp) {

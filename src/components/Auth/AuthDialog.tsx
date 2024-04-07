@@ -43,7 +43,7 @@ export default function AuthDialog({ open, setOpen, tabIndex }: IFormDialog) {
         open={open}
         onClose={handleClose}
         PaperProps={{
-          component: "form",
+          component: "div",
           onSubmit: (event: React.FormEvent<HTMLButtonElement>) => {
             handleClose();
           },
