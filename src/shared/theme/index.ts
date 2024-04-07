@@ -6,7 +6,7 @@ import PALETTE from "./pallete";
 
 let theme = createTheme({
   spacing: 4,
-  breakpoints: { values: { xs: 0, sm: 740, md: 900, lg: 1200, xl: 1536 } },
+  breakpoints: { values: { xs: 0, sm: 540, md: 900, lg: 1200, xl: 1536 } },
   palette: PALETTE,
 });
 
@@ -56,7 +56,6 @@ theme = createTheme(theme, {
           flex: 1,
           color: "secondary.main",
           transition: theme.transitions.create(["background-color"], {
-            animation: theme.transitions.easing.easeInOut,
             duration: theme.transitions.duration.short,
           }),
         }),

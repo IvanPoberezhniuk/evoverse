@@ -1,8 +1,9 @@
 import { useFormik } from "formik";
 
+import ButtonWithSound from "@/shared/components/ButtonWithSound";
+import useMetaMask from "@/shared/hooks/web3";
 import {
   Box,
-  Button,
   Checkbox,
   Collapse,
   FormControlLabel,
@@ -39,7 +40,7 @@ export default function Login() {
     touched,
     setFieldValue,
     handleChange,
-    handleSubmit,
+    submitForm,
   } = useFormik<ILoginFormValues>({
     initialValues: { email: "", password: "", use2fa: false, code2fa: "" },
     onSubmit: (values) => {
@@ -48,14 +49,16 @@ export default function Login() {
     validationSchema: loginSchema,
   });
 
+  const { handleLogIn } = useMetaMask();
+
   return (
     <Box sx={styles.container}>
-      <Stack>
+      <Stack component="form">
         <Typography variant="h3" textAlign="center">
           WELCOME BACK
         </Typography>
         <Typography variant="body2" textAlign="center">
-          We've saved your seat at the winning table.
+          We&apos;ve saved your seat at the winning table.
         </Typography>
         <TextField
           id="email"
@@ -91,15 +94,22 @@ export default function Login() {
             value={values.code2fa}
           />
         </Collapse>
-        <Button onClick={handleSubmit}>LOGIN</Button>
+        <ButtonWithSound onClick={submitForm}>LOGIN</ButtonWithSound>
         <Typography variant="body2" textAlign="center">
           or login with wallet
         </Typography>
         <FormGroup>
           <FormControlLabel control={<Switch />} label="Using Ledger?" />
         </FormGroup>
-        <Button color="secondary">SOLONA WALLET</Button>
-        <Button color="secondary">Metamask</Button>
+        <ButtonWithSound color="secondary">SOLONA WALLET</ButtonWithSound>
+        <ButtonWithSound
+          color="secondary"
+          onClick={() => {
+            handleLogIn();
+          }}
+        >
+          Metamask
+        </ButtonWithSound>
       </Stack>
     </Box>
   );

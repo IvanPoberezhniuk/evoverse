@@ -1,8 +1,11 @@
+import { useState } from "react";
+
 import { useFormik } from "formik";
 
+import ButtonWithSound from "@/shared/components/ButtonWithSound";
+import useMetaMask from "@/shared/hooks/web3";
 import {
   Box,
-  Button,
   Checkbox,
   Collapse,
   FormControlLabel,
@@ -41,9 +44,9 @@ export default function Signin() {
     errors,
     touched,
     submitCount,
+    submitForm,
     setFieldValue,
     handleChange,
-    handleSubmit,
   } = useFormik<ISigninFormValues>({
     initialValues: {
       email: "",
@@ -64,33 +67,52 @@ export default function Signin() {
     validationSchema: signinSchema,
   });
 
+  const [metamaskSignUp, setmetamaskSignUp] = useState(false);
+  const { accounts, handleSignUp } = useMetaMask();
+
+  const signUp = (): void => {
+    if (metamaskSignUp) {
+      const hasErros =
+        !errors.name && !errors.termsAndConditions && !errors.oldEnough;
+      hasErros && values.name && handleSignUp({ name: values.name });
+      submitForm();
+      return;
+    }
+
+    submitForm();
+  };
+
   return (
     <Box sx={styles.container}>
-      <Stack>
-        <Typography variant="h4" textAlign="center">
+      <Stack component="form">
+        <Typography variant="h3" textAlign="center">
           CREATE AN ACCOUNT
         </Typography>
         <Typography variant="body2" textAlign="center">
           Join the thrill, the casino where anything is possible!
         </Typography>
-        <TextField
-          id="email"
-          label="Email"
-          type="email"
-          onChange={handleChange}
-          value={values.email}
-          helperText={touched.email && errors.email}
-          error={Boolean(Boolean(touched.email && errors.email))}
-        />
-        <TextField
-          id="password"
-          label="Password"
-          type="password"
-          onChange={handleChange}
-          value={values.password}
-          helperText={touched.password && errors.password}
-          error={Boolean(Boolean(touched.password && errors.password))}
-        />
+        {!metamaskSignUp && (
+          <>
+            <TextField
+              id="email"
+              label="Email"
+              type="email"
+              onChange={handleChange}
+              value={values.email}
+              helperText={touched.email && errors.email}
+              error={Boolean(Boolean(touched.email && errors.email))}
+            />
+            <TextField
+              id="password"
+              label="Password"
+              type="password"
+              onChange={handleChange}
+              value={values.password}
+              helperText={touched.password && errors.password}
+              error={Boolean(Boolean(touched.password && errors.password))}
+            />
+          </>
+        )}
         <TextField
           id="name"
           label="Username"
@@ -147,15 +169,22 @@ export default function Signin() {
             onChange={() => setFieldValue("oldEnough", !values.oldEnough)}
           />
         </FormGroup>
-        <Button onClick={handleSubmit}>REGISTER</Button>
+        <ButtonWithSound onClick={signUp}>
+          {metamaskSignUp ? "CONNECT WALLET" : "REGISTER"}
+        </ButtonWithSound>
         <Typography variant="body2" textAlign="center">
           or login with wallet
         </Typography>
         <FormGroup>
           <FormControlLabel control={<Switch />} label="Using Ledger?" />
         </FormGroup>
-        <Button color="secondary">SOLONA WALLET</Button>
-        <Button color="secondary">Metamask</Button>
+        <ButtonWithSound color="secondary">SOLONA WALLET</ButtonWithSound>
+        <ButtonWithSound
+          color="secondary"
+          onClick={() => setmetamaskSignUp(true)}
+        >
+          Metamask
+        </ButtonWithSound>
       </Stack>
     </Box>
   );
